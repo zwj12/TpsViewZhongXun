@@ -1,0 +1,190 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9F73D905-A50E-4DD0-B72E-8DB943CF8C05}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{4D628B5B-2FBC-4AA6-8C16-197242AEB884};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>TpsViewZhongXun</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <OutputFileFolder>tps/OptSDK</OutputFileFolder>
+    <RootNamespace>TpsViewZhongXunNameSpace</RootNamespace>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <FormFactorID>
+    </FormFactorID>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <NativePlatformName>Windows CE</NativePlatformName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PlatformID>E2BECB1F-8C8C-41ba-B736-9BE7D946A398</PlatformID>
+    <PlatformFamilyName>WindowsCE</PlatformFamilyName>
+    <DeployDirSuffix>$(AssemblyName)</DeployDirSuffix>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>0</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <GenerateSerializationAssemblies>off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>0</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <GenerateSerializationAssemblies>off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ABB.Robotics, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ABB.Robotics.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="ABB.Robotics.Controllers, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ABB.Robotics.Controllers.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="ABB.Robotics.GTPU, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ABB.Robotics.GTPU.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="ABB.Robotics.GTPU.Windows.Forms, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ABB.Robotics.GTPU.Windows.Forms.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="ABB.Robotics.Taf.Base, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ABB.Robotics.Taf.Base.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="ABB.Robotics.Tps.Resources, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ABB.Robotics.Tps.Resources.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="ABB.Robotics.Tps.Taf, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ABB.Robotics.Tps.Taf.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="ABB.Robotics.Tps.Windows.Forms, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ABB.Robotics.Tps.Windows.Forms.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="ABB.Robotics.DataBinding, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ABB.Robotics.DataBinding.dll</HintPath>
+      <SpecificVersion>false</SpecificVersion>
+    </Reference>
+    <Reference Include="ABB.Robotics.ScreenMaker.Windows.Forms, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ABB.Robotics.ScreenMaker.Windows.Forms.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="ProductionScreenBase, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\ABB Industrial IT\Robotics IT\SDK\FlexPendant SDK 6.12\bin\ProductionScreenBase.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Name>MSCorLib</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Robot\RWSystem.cs" />
+    <Compile Include="view.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view.resx">
+      <DependentUpon>view.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_ZhongXun.png" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}">
+        <HostingProcess disable="1" />
+      </FlavorProperties>
+      <UserProperties TDLELEMENTTYPE="GTPULibrary" TDLFILE="Gtpu.tdl" SDKVersion="5.8.0.0" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Condition="'$(TargetFrameworkVersion)' == 'v1.0'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.v1.targets" />
+  <Import Condition="'$(TargetFrameworkVersion)' == 'v2.0'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+  <Import Condition="'$(TargetFrameworkVersion)' == 'v3.5'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>call "C:\Program Files (x86)\Microsoft Visual Studio 9.0\\VC\vcvarsall.bat" x86
+copy "$(TargetDir)$(TargetName).dll" "\\VBOXSVR\RobotStudio\Virtual Controllers\Controller_ZhongXun1\HOME\ProdScr\tps"</PostBuildEvent>
+  </PropertyGroup>
+  <Import Condition="'$(TargetFrameworkVersion)' == 'v3.5'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
+</Project>

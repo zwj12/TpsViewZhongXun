@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpsViewZhongXun", "TpsViewZhongXun\TpsViewZhongXun.csproj", "{9F73D905-A50E-4DD0-B72E-8DB943CF8C05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpsViewZhongXunTexts", "TpsViewZhongXunTexts\TpsViewZhongXunTexts.csproj", "{83739552-66FC-4912-964B-0BF493001D7F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F73D905-A50E-4DD0-B72E-8DB943CF8C05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F73D905-A50E-4DD0-B72E-8DB943CF8C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F73D905-A50E-4DD0-B72E-8DB943CF8C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F73D905-A50E-4DD0-B72E-8DB943CF8C05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83739552-66FC-4912-964B-0BF493001D7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83739552-66FC-4912-964B-0BF493001D7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83739552-66FC-4912-964B-0BF493001D7F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{83739552-66FC-4912-964B-0BF493001D7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83739552-66FC-4912-964B-0BF493001D7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83739552-66FC-4912-964B-0BF493001D7F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
