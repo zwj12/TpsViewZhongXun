@@ -15,6 +15,7 @@ using ABB.Robotics.Diagnostics;
 using ABB.Robotics.Controllers.RapidDomain;
 
 using TpsViewZhongXunNameSpace.Robot;
+using TpsViewZhongXunNameSpace.ZhongXun;
 
 //
 // The ProductionScreenApp attribute is used by the SetupEditor to help the user to 
@@ -36,55 +37,47 @@ namespace TpsViewZhongXunNameSpace
     /// </summary>
     public class TpsViewZhongXun : TpsForm, ITpsViewSetup, ITpsViewActivation
     {
-        private TpsLabel tpsLabel_Title;
-        private Button button_Weld;
-        
-        private const string CURRENT_MODULE_NAME = "TpsViewZhongXun";
-
-        #region MultiView
-
-        private enum ActiveView
-        {
-            Desktop = 0, // The view represented by this class
-            Weld = 1,
-            //Register = 2,
-            //Setting = 3,
-        }
-
-        private RWSystem rwSystem = null;
-
-        //application views 
-        private TpsFormWeld _viewWeld = null;
-        //private TpsFormRegister _viewRegister = null;
-        //private TpsFormSetting _viewSetting = null;
-
-        //sets this first view to the currently active view
-        private ActiveView _activeView = ActiveView.Desktop;
+        #region Fields
 
         //flags
         private bool _isExecuting = false;
         private bool _isInAuto = false;
         private bool _appInFocus = true;
 
-        //needed to launch standard FP apps from this app.
-        private ITpsViewLaunchServices _iTpsSite;
+        private RWSystem rwSystem = null;
+        private TemplateData templateData = null;
 
-        //handles images
+        private const string CURRENT_MODULE_NAME = "TpsViewZhongXun";
+
+        #endregion
+
+        
+        #region MultiView
+
+        private enum ActiveView
+        {
+            Desktop = 0,
+            Weld = 1,
+        }
+
+        private ActiveView _activeView = ActiveView.Desktop;
+        private TpsFormWeld _viewWeld = null;
+
+
+        private ITpsViewLaunchServices _iTpsSite;
         private TpsResourceManager _tpsRm = null;
 
         #endregion
 
+ 
+        private TpsLabel tpsLabel_Title;
+        private Button button_Weld;
+ 
 
         public TpsViewZhongXun()
         {
-            //
-            // Required for Windows Form Designer support
-            //
             InitializeComponent();            
 
-            //
-            // ToDo: Add any constructor code after InitializeComponent call
-            //
             try
             {
                 _tpsRm = new ABB.Robotics.Tps.Resources.TpsResourceManager("TpsViewZhongXunNameSpace.strings", ABB.Robotics.Taf.Base.TafAssembly.Load("TpsViewZhongXunTexts.dll"));
@@ -92,8 +85,6 @@ namespace TpsViewZhongXunNameSpace
             }
             catch (System.Exception ex)
             {
-                // If initialization of application fails a message box is shown
-                ErrorHandler.AddErrorMessage("MichaelLog", ex.Message);
                 GTPUMessageBox.Show(this.Parent
                     , null
                     , string.Format("An unexpected error occurred while starting up ZhongXun Application. \n\n{0}", ex.Message)
@@ -103,11 +94,6 @@ namespace TpsViewZhongXunNameSpace
  
         }
 
-        /// <summary>
-        /// This is where you clean up any remaining resources used by your application before 
-        /// the application itself is disposed of by the host (TAF - TeachPendant Application Framework). 
-        /// The method is called by the host when the application is closed down.
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (!IsDisposed)
@@ -219,6 +205,7 @@ namespace TpsViewZhongXunNameSpace
             {
                 // Do install
                 this.rwSystem = new RWSystem();
+                this.templateData = new TemplateData();
 
                 if (sender is ITpsViewLaunchServices)
                 {
@@ -249,6 +236,10 @@ namespace TpsViewZhongXunNameSpace
         {
             try
             {
+                if (_activeView == ActiveView.Weld)
+                {
+                    //this._viewWeld.UnSubscribe();
+                }
                 _appInFocus = false;
             }
             catch (Exception ex)
@@ -266,6 +257,13 @@ namespace TpsViewZhongXunNameSpace
         {
             try
             {
+                if (_activeView == ActiveView.Desktop) // If first view is active
+                {
+                }
+                else if (_activeView == ActiveView.Weld)
+                {
+                    this._viewWeld.Activate();
+                }
                 _appInFocus = true;
             }
             catch (Exception ex)
@@ -334,7 +332,7 @@ namespace TpsViewZhongXunNameSpace
                 _activeView = ActiveView.Weld;
 
                 // Create view
-                _viewWeld = new TpsFormWeld(this._tpsRm, this.rwSystem);
+                _viewWeld = new TpsFormWeld(this._tpsRm, this.rwSystem,this.templateData);
 
                 // Set up subscription to Closing event of Production view
                 _viewWeld.Closing += new System.ComponentModel.CancelEventHandler(_onViewClosing);

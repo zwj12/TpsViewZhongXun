@@ -17,8 +17,11 @@ namespace TpsViewZhongXunNameSpace
 {
     public class TpsFormWeld : TpsForm, ITpsViewActivation
     {
-        private TemplateData templateData = new TemplateData();
+        #region Fields
 
+        private TemplateData templateData;
+
+        #endregion
 
         private ABB.Robotics.Tps.Windows.Forms.MenuItem menuItem_Refresh;
         private ABB.Robotics.Tps.Windows.Forms.MenuItem menuItem_Apply;
@@ -57,7 +60,7 @@ namespace TpsViewZhongXunNameSpace
         private System.ComponentModel.IContainer components = null;
 
 
-        public TpsFormWeld(TpsResourceManager rM, RWSystem rwSystem)
+        public TpsFormWeld(TpsResourceManager rM, RWSystem rwSystem, TemplateData templateData)
         {
             InitializeComponent();
 
@@ -65,6 +68,7 @@ namespace TpsViewZhongXunNameSpace
             {
                 this._tpsRm = rM;
                 this.rwSystem = rwSystem;
+                this.templateData=templateData;
                 this.InitializeTexts();
             }
             catch (System.Exception ex)
@@ -293,6 +297,7 @@ namespace TpsViewZhongXunNameSpace
             this.numEditor_TemplateZ.Size = new System.Drawing.Size(80, 24);
             this.numEditor_TemplateZ.TabIndex = 39;
             this.numEditor_TemplateZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.numEditor_TemplateZ.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.dataControl_PropertyChanged);
             // 
             // numEditor_TemplateY
             // 
@@ -320,6 +325,7 @@ namespace TpsViewZhongXunNameSpace
             this.numEditor_TemplateY.Size = new System.Drawing.Size(80, 24);
             this.numEditor_TemplateY.TabIndex = 41;
             this.numEditor_TemplateY.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.numEditor_TemplateY.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.dataControl_PropertyChanged);
             // 
             // numEditor_TemplateX
             // 
@@ -347,6 +353,7 @@ namespace TpsViewZhongXunNameSpace
             this.numEditor_TemplateX.Size = new System.Drawing.Size(80, 24);
             this.numEditor_TemplateX.TabIndex = 40;
             this.numEditor_TemplateX.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.numEditor_TemplateX.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.dataControl_PropertyChanged);
             // 
             // tpsLabel_numZ
             // 
@@ -398,7 +405,7 @@ namespace TpsViewZhongXunNameSpace
             this.tpsLabel_Template.Size = new System.Drawing.Size(102, 24);
             this.tpsLabel_Template.TabIndex = 35;
             this.tpsLabel_Template.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.tpsLabel_Template.Title = "模板位置";
+            this.tpsLabel_Template.Title = "基准位置";
             // 
             // numEditor_TemplateOffsetZ
             // 
@@ -426,6 +433,7 @@ namespace TpsViewZhongXunNameSpace
             this.numEditor_TemplateOffsetZ.Size = new System.Drawing.Size(80, 24);
             this.numEditor_TemplateOffsetZ.TabIndex = 43;
             this.numEditor_TemplateOffsetZ.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.numEditor_TemplateOffsetZ.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.dataControl_PropertyChanged);
             // 
             // numEditor_TemplateOffsetY
             // 
@@ -453,6 +461,7 @@ namespace TpsViewZhongXunNameSpace
             this.numEditor_TemplateOffsetY.Size = new System.Drawing.Size(80, 24);
             this.numEditor_TemplateOffsetY.TabIndex = 45;
             this.numEditor_TemplateOffsetY.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.numEditor_TemplateOffsetY.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.dataControl_PropertyChanged);
             // 
             // numEditor_TemplateOffsetX
             // 
@@ -480,6 +489,7 @@ namespace TpsViewZhongXunNameSpace
             this.numEditor_TemplateOffsetX.Size = new System.Drawing.Size(80, 24);
             this.numEditor_TemplateOffsetX.TabIndex = 44;
             this.numEditor_TemplateOffsetX.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.numEditor_TemplateOffsetX.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.dataControl_PropertyChanged);
             // 
             // tpsLabel1
             // 
@@ -520,7 +530,7 @@ namespace TpsViewZhongXunNameSpace
             this.tpsLabel2.Size = new System.Drawing.Size(102, 24);
             this.tpsLabel2.TabIndex = 42;
             this.tpsLabel2.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.tpsLabel2.Title = "模块索引";
+            this.tpsLabel2.Title = "焊接区域";
             // 
             // numEditor_TemplateStart
             // 
@@ -554,6 +564,7 @@ namespace TpsViewZhongXunNameSpace
             0,
             0,
             0});
+            this.numEditor_TemplateStart.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.dataControl_PropertyChanged);
             // 
             // numEditor_TemplateQuantity
             // 
@@ -587,6 +598,7 @@ namespace TpsViewZhongXunNameSpace
             0,
             0,
             0});
+            this.numEditor_TemplateQuantity.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(this.dataControl_PropertyChanged);
             // 
             // tpsLabel3
             // 
@@ -599,7 +611,7 @@ namespace TpsViewZhongXunNameSpace
             this.tpsLabel3.Size = new System.Drawing.Size(80, 24);
             this.tpsLabel3.TabIndex = 42;
             this.tpsLabel3.TextAlignment = System.Drawing.ContentAlignment.TopLeft;
-            this.tpsLabel3.Title = "~";
+            this.tpsLabel3.Title = "到";
             // 
             // TpsFormWeld
             // 
@@ -664,6 +676,7 @@ namespace TpsViewZhongXunNameSpace
 
         public void Activate()
         {
+            this.templateData.RefreshData(this.rwSystem);
             this.Invoke(this.UpdateGUI);
             //throw new NotImplementedException();
         }
@@ -679,10 +692,18 @@ namespace TpsViewZhongXunNameSpace
         {
             try
             {
-                this.listBox_Template.Items.Clear();
-                this.listBox_WeldTemplate.Items.Clear();
-                templateData.RefreshData(this.rwSystem);
+                this.numEditor_TemplateX.Value = (decimal)this.templateData.ModelLocation.X;
+                this.numEditor_TemplateY.Value = (decimal)this.templateData.ModelLocation.Y;
+                this.numEditor_TemplateZ.Value = (decimal)this.templateData.ModelLocation.Z;
 
+                this.numEditor_TemplateOffsetX.Value = (decimal)this.templateData.ModelOffset.X;
+                this.numEditor_TemplateOffsetY.Value = (decimal)this.templateData.ModelOffset.Y;
+                this.numEditor_TemplateOffsetZ.Value = (decimal)this.templateData.ModelOffset.Z;
+
+                this.numEditor_TemplateStart.Value = (decimal)this.templateData.ModelOffsetStart;
+                this.numEditor_TemplateQuantity.Value = (decimal)this.templateData.ModelOffsetQuantity;
+
+                this.listBox_Template.Items.Clear();              
                 foreach (string item in templateData.TemplateList)
                 {
                     if (!String.IsNullOrEmpty(item))
@@ -692,6 +713,7 @@ namespace TpsViewZhongXunNameSpace
                     }
                 }
 
+                this.listBox_WeldTemplate.Items.Clear();
                 foreach (string item in templateData.WeldTemplateList)
                 {
                     if (!String.IsNullOrEmpty(item))
@@ -700,10 +722,6 @@ namespace TpsViewZhongXunNameSpace
                         this.listBox_WeldTemplate.Items.Add(listViewItem);
                     }
                 }
-
-                this.numEditor_TemplateX.Value =(decimal) this.templateData.Location.X;
-                this.numEditor_TemplateY.Value = (decimal)this.templateData.Location.Y;
-                this.numEditor_TemplateZ.Value = (decimal)this.templateData.Location.Z;
 
                 this.menuItem_Apply.Enabled = false;
             }
@@ -726,12 +744,32 @@ namespace TpsViewZhongXunNameSpace
         {
             try
             {
+                ABB.Robotics.Controllers.RapidDomain.Pos pos = new ABB.Robotics.Controllers.RapidDomain.Pos();
+                pos.X = (float)this.numEditor_TemplateX.Value;
+                pos.Y = (float)this.numEditor_TemplateY.Value;
+                pos.Z = (float)this.numEditor_TemplateZ.Value;
+                this.templateData.ModelLocation = pos;
+
+                pos.X = (float)this.numEditor_TemplateOffsetX.Value;
+                pos.Y = (float)this.numEditor_TemplateOffsetY.Value;
+                pos.Z = (float)this.numEditor_TemplateOffsetZ.Value;
+                this.templateData.ModelOffset = pos;
+
+                this.templateData.ModelOffsetStart = (int)this.numEditor_TemplateStart.Value;
+                this.templateData.ModelOffsetQuantity = (int)this.numEditor_TemplateQuantity.Value;
+                this.templateData.WeldTemplateList.Clear();
+                foreach (ListBoxItem item in this.listBox_WeldTemplate.Items)
+                {
+                    this.templateData.WeldTemplateList.Add(item.Text);
+                }
+
+                this.templateData.ApplyData(this.rwSystem);
                 this.menuItem_Apply.Enabled = false;
             }
             catch (Exception ex)
             {
                 GTPUMessageBox.Show(this.Parent.Parent, null
-                    , string.Format("An unexpected error occurred when applying RAPID data 'weld data'. Message {0}", ex.ToString())
+                    , string.Format("An unexpected error occurred when applying RAPID data. Message {0}", ex.ToString())
                     , "System Error"
                     , System.Windows.Forms.MessageBoxIcon.Hand
                     , System.Windows.Forms.MessageBoxButtons.OK);
@@ -740,11 +778,8 @@ namespace TpsViewZhongXunNameSpace
 
         private void menuItem_Refresh_Click(object sender, EventArgs e)
         {
+            this.templateData.RefreshData(this.rwSystem);
             this.Invoke(this.UpdateGUI);
-        }
-
-        private void MessageBoxEvent(Object sender, MessageBoxEventArgs e)
-        {
         }
 
         private void dataControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -759,25 +794,35 @@ namespace TpsViewZhongXunNameSpace
 
         private void button_Add_Click(object sender, EventArgs e)
         {
-            if (this.listBox_Template.SelectedItem!=null)
-            {
-                string strTemplate = this.listBox_Template.SelectedItem.Text;
-                this.templateData.WeldTemplateList.Add(strTemplate);
-                this.Invoke(this.UpdateGUI);
-            }
+            //if (this.templateData.WeldTemplateList.Count<4 && this.listBox_Template.SelectedItem!=null)
+            //{
+            //    string strTemplate = this.listBox_Template.SelectedItem.Text;
+            //    this.templateData.WeldTemplateList.Add(strTemplate);
+            //    this.Invoke(this.UpdateGUI);
+            //}
 
-            
+            if (this.listBox_WeldTemplate.Items.Count < 4 && this.listBox_Template.SelectedItem != null)
+            {
+                ABB.Robotics.Tps.Windows.Forms.ListBoxItem listViewItem = new ABB.Robotics.Tps.Windows.Forms.ListBoxItem(this.listBox_Template.SelectedItem.Text);
+                this.listBox_WeldTemplate.Items.Add(listViewItem);
+            }
+            this.menuItem_Apply.Enabled = true;
         }
 
         private void button_Remove_Click(object sender, EventArgs e)
         {
+            //if (this.listBox_WeldTemplate.SelectedItem != null)
+            //{
+            //    string strTemplate = this.listBox_WeldTemplate.SelectedItem.Text;
+            //    this.templateData.WeldTemplateList.Remove(strTemplate);
+            //    this.Invoke(this.UpdateGUI);
+            //}
+
             if (this.listBox_WeldTemplate.SelectedItem != null)
             {
-                string strTemplate = this.listBox_WeldTemplate.SelectedItem.Text;
-                this.templateData.WeldTemplateList.Remove(strTemplate);
-                this.Invoke(this.UpdateGUI);
+                this.listBox_WeldTemplate.Items.Remove(this.listBox_WeldTemplate.SelectedItem);
             }
-
+            this.menuItem_Apply.Enabled = true;
         }
 
     }

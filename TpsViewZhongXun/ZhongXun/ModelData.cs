@@ -69,7 +69,6 @@ namespace TpsViewZhongXunNameSpace.ZhongXun
 
         public void RefreshData(RWSystem rwSystem, string strModelData)
         {
-            //ErrorHandler.AddErrorMessage("MichaelLog", strArcData);
             ABB.Robotics.Controllers.RapidDomain.UserDefined abbUserDefinedDataType = new ABB.Robotics.Controllers.RapidDomain.UserDefined(rwSystem.Controller.Rapid.GetRapidDataType(new string[] { strTaskName, strDataTypeModuleName, strDataType }));
             abbUserDefinedDataType.FillFromString(strModelData);
 
