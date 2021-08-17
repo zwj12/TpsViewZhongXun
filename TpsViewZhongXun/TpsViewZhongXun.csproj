@@ -151,14 +151,23 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Robot\RWSystem.cs" />
+    <Compile Include="TpsFormWeld.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="view.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ZhongXun\ModelData.cs" />
+    <Compile Include="ZhongXun\TemplateData.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TpsFormWeld.resx">
+      <DependentUpon>TpsFormWeld.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="view.resx">
@@ -184,7 +193,7 @@
     <PreBuildEvent>
     </PreBuildEvent>
     <PostBuildEvent>call "C:\Program Files (x86)\Microsoft Visual Studio 9.0\\VC\vcvarsall.bat" x86
-copy "$(TargetDir)$(TargetName).dll" "\\VBOXSVR\RobotStudio\Virtual Controllers\Controller_ZhongXun1\HOME\ProdScr\tps"</PostBuildEvent>
+copy "$(TargetDir)$(TargetName).dll" "\\VBOXSVR\RobotStudio\Virtual Controllers\140-107895-20210809\HOME\ProdScr\tps"</PostBuildEvent>
   </PropertyGroup>
   <Import Condition="'$(TargetFrameworkVersion)' == 'v3.5'" Project="$(MSBuildBinPath)\Microsoft.CompactFramework.CSharp.targets" />
 </Project>

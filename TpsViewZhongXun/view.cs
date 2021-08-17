@@ -45,8 +45,8 @@ namespace TpsViewZhongXunNameSpace
 
         private enum ActiveView
         {
-            Desktop = 0, // The view represented by this class, (first view with PipeGrooveModel and Setting buttons)
-            //WeldParameter = 1,
+            Desktop = 0, // The view represented by this class
+            Weld = 1,
             //Register = 2,
             //Setting = 3,
         }
@@ -54,7 +54,7 @@ namespace TpsViewZhongXunNameSpace
         private RWSystem rwSystem = null;
 
         //application views 
-        //private TpsFormWeldParameter _viewWeldParameter = null;
+        private TpsFormWeld _viewWeld = null;
         //private TpsFormRegister _viewRegister = null;
         //private TpsFormSetting _viewSetting = null;
 
@@ -325,7 +325,33 @@ namespace TpsViewZhongXunNameSpace
 
         private void button_Weld_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Wait cursor if it is performance demanding to open the view...
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
 
+                // Set active view 
+                _activeView = ActiveView.Weld;
+
+                // Create view
+                _viewWeld = new TpsFormWeld(this._tpsRm, this.rwSystem);
+
+                // Set up subscription to Closing event of Production view
+                _viewWeld.Closing += new System.ComponentModel.CancelEventHandler(_onViewClosing);
+                _viewWeld.Closed += new EventHandler(_viewClosed);
+                _viewWeld.ShowMe(this);
+
+                // Ask Production view to set up its subscriptions to controller events
+                _viewWeld.Activate();
+            }
+            catch (System.Exception ex)
+            {
+                DisplayErrorMessage(ex.Message);
+            }
+            finally
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            }
         }
 
     }
