@@ -518,6 +518,7 @@ namespace TpsViewZhongXunNameSpace
             this.button_StartToWeld.TabIndex = 46;
             this.button_StartToWeld.Text = "Æô¶¯";
             this.button_StartToWeld.TextAlign = ABB.Robotics.Tps.Windows.Forms.ContentAlignmentABB.MiddleCenter;
+            this.button_StartToWeld.Click += new System.EventHandler(this.button_StartToWeld_Click);
             // 
             // tpsLabel2
             // 
@@ -744,26 +745,7 @@ namespace TpsViewZhongXunNameSpace
         {
             try
             {
-                ABB.Robotics.Controllers.RapidDomain.Pos pos = new ABB.Robotics.Controllers.RapidDomain.Pos();
-                pos.X = (float)this.numEditor_TemplateX.Value;
-                pos.Y = (float)this.numEditor_TemplateY.Value;
-                pos.Z = (float)this.numEditor_TemplateZ.Value;
-                this.templateData.ModelLocation = pos;
-
-                pos.X = (float)this.numEditor_TemplateOffsetX.Value;
-                pos.Y = (float)this.numEditor_TemplateOffsetY.Value;
-                pos.Z = (float)this.numEditor_TemplateOffsetZ.Value;
-                this.templateData.ModelOffset = pos;
-
-                this.templateData.ModelOffsetStart = (int)this.numEditor_TemplateStart.Value;
-                this.templateData.ModelOffsetQuantity = (int)this.numEditor_TemplateQuantity.Value;
-                this.templateData.WeldTemplateList.Clear();
-                foreach (ListBoxItem item in this.listBox_WeldTemplate.Items)
-                {
-                    this.templateData.WeldTemplateList.Add(item.Text);
-                }
-
-                this.templateData.ApplyData(this.rwSystem);
+                this.SaveData();   
                 this.menuItem_Apply.Enabled = false;
             }
             catch (Exception ex)
@@ -825,6 +807,47 @@ namespace TpsViewZhongXunNameSpace
             this.menuItem_Apply.Enabled = true;
         }
 
+        private void button_StartToWeld_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.SaveData();
+                this.menuItem_Apply.Enabled = false;
+                this.templateData.StartToWeld(this.rwSystem);               
+            }
+            catch (Exception ex)
+            {
+                GTPUMessageBox.Show(this.Parent.Parent, null
+                    , string.Format("An unexpected error occurred when applying RAPID data. Message {0}", ex.ToString())
+                    , "System Error"
+                    , System.Windows.Forms.MessageBoxIcon.Hand
+                    , System.Windows.Forms.MessageBoxButtons.OK);
+            }           
+        }
+
+        private void SaveData()
+        {
+            ABB.Robotics.Controllers.RapidDomain.Pos pos = new ABB.Robotics.Controllers.RapidDomain.Pos();
+            pos.X = (float)this.numEditor_TemplateX.Value;
+            pos.Y = (float)this.numEditor_TemplateY.Value;
+            pos.Z = (float)this.numEditor_TemplateZ.Value;
+            this.templateData.ModelLocation = pos;
+
+            pos.X = (float)this.numEditor_TemplateOffsetX.Value;
+            pos.Y = (float)this.numEditor_TemplateOffsetY.Value;
+            pos.Z = (float)this.numEditor_TemplateOffsetZ.Value;
+            this.templateData.ModelOffset = pos;
+
+            this.templateData.ModelOffsetStart = (int)this.numEditor_TemplateStart.Value;
+            this.templateData.ModelOffsetQuantity = (int)this.numEditor_TemplateQuantity.Value;
+            this.templateData.WeldTemplateList.Clear();
+            foreach (ListBoxItem item in this.listBox_WeldTemplate.Items)
+            {
+                this.templateData.WeldTemplateList.Add(item.Text);
+            }
+
+            this.templateData.ApplyData(this.rwSystem);
+        }
     }
 
 

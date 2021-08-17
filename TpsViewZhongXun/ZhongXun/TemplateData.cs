@@ -227,5 +227,21 @@ namespace TpsViewZhongXunNameSpace.ZhongXun
             rapidData.Value = new ABB.Robotics.Controllers.RapidDomain.Num(1);
             rapidData.Dispose();
         }
+
+        public void StartToWeld(RWSystem rwSystem)
+        {
+            ABB.Robotics.Controllers.IOSystemDomain.Signal signal = rwSystem.Controller.IOSystem.GetSignal("sgoPMPLC_1");
+            ABB.Robotics.Controllers.IOSystemDomain.GroupSignal sgoPMPLC_1 = (ABB.Robotics.Controllers.IOSystemDomain.GroupSignal)signal;
+            sgoPMPLC_1.GroupValue = 101;
+
+            signal = rwSystem.Controller.IOSystem.GetSignal("sgiPLCCode_1");
+            ABB.Robotics.Controllers.IOSystemDomain.GroupSignal sgiPLCCode_1 = (ABB.Robotics.Controllers.IOSystemDomain.GroupSignal)signal;
+            if (sgiPLCCode_1.GroupValue == 101)
+            {
+                signal = rwSystem.Controller.IOSystem.GetSignal("sdoRunPart_1");
+                ABB.Robotics.Controllers.IOSystemDomain.DigitalSignal sdoRunPart_1 = (ABB.Robotics.Controllers.IOSystemDomain.DigitalSignal)signal;
+                sdoRunPart_1.Pulse();
+            }                        
+        }
     }
 }
