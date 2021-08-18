@@ -46,6 +46,7 @@ namespace TpsViewZhongXunNameSpace
 
         private RWSystem rwSystem = null;
         private TemplateData templateData = null;
+        private YamlFile yamlFile = null;
 
         private const string CURRENT_MODULE_NAME = "TpsViewZhongXun";
 
@@ -58,10 +59,12 @@ namespace TpsViewZhongXunNameSpace
         {
             Desktop = 0,
             Weld = 1,
+            YAML=2,
         }
 
         private ActiveView _activeView = ActiveView.Desktop;
         private TpsFormWeld _viewWeld = null;
+        private TpsFormYAML _viewYAML = null;
 
 
         private ITpsViewLaunchServices _iTpsSite;
@@ -71,6 +74,7 @@ namespace TpsViewZhongXunNameSpace
 
  
         private TpsLabel tpsLabel_Title;
+        private Button button_YAML;
         private Button button_Weld;
  
 
@@ -130,6 +134,7 @@ namespace TpsViewZhongXunNameSpace
         {
             this.tpsLabel_Title = new ABB.Robotics.Tps.Windows.Forms.TpsLabel();
             this.button_Weld = new ABB.Robotics.Tps.Windows.Forms.Button();
+            this.button_YAML = new ABB.Robotics.Tps.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tpsLabel_Title
@@ -154,24 +159,42 @@ namespace TpsViewZhongXunNameSpace
             this.button_Weld.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.button_Weld.Font = ABB.Robotics.Tps.Windows.Forms.TpsFont.Font12b;
             this.button_Weld.Image = null;
-            this.button_Weld.Location = new System.Drawing.Point(144, 168);
+            this.button_Weld.Location = new System.Drawing.Point(78, 168);
             this.button_Weld.Name = "button_Weld";
             this.button_Weld.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(172)))), ((int)(((byte)(182)))));
             this.button_Weld.Size = new System.Drawing.Size(120, 120);
             this.button_Weld.TabIndex = 7;
-            this.button_Weld.Text = "Weld";
+            this.button_Weld.Text = "Ä£°å";
             this.button_Weld.TextAlign = ABB.Robotics.Tps.Windows.Forms.ContentAlignmentABB.MiddleCenter;
             this.button_Weld.Click += new System.EventHandler(this.button_Weld_Click);
+            // 
+            // button_YAML
+            // 
+            this.button_YAML.BackColor = System.Drawing.Color.White;
+            this.button_YAML.BackgroundImage = null;
+            this.button_YAML.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.button_YAML.Font = ABB.Robotics.Tps.Windows.Forms.TpsFont.Font12b;
+            this.button_YAML.Image = null;
+            this.button_YAML.Location = new System.Drawing.Point(271, 168);
+            this.button_YAML.Name = "button_YAML";
+            this.button_YAML.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(172)))), ((int)(((byte)(182)))));
+            this.button_YAML.Size = new System.Drawing.Size(120, 120);
+            this.button_YAML.TabIndex = 8;
+            this.button_YAML.Text = "ÎÄ¼þ";
+            this.button_YAML.TextAlign = ABB.Robotics.Tps.Windows.Forms.ContentAlignmentABB.MiddleCenter;
+            this.button_YAML.Click += new System.EventHandler(this.button_YAML_Click);
             // 
             // TpsViewZhongXun
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.LightGray;
+            this.Controls.Add(this.button_YAML);
             this.Controls.Add(this.button_Weld);
             this.Controls.Add(this.tpsLabel_Title);
             this.Size = new System.Drawing.Size(650, 390);
             this.Controls.SetChildIndex(this.tpsLabel_Title, 0);
             this.Controls.SetChildIndex(this.button_Weld, 0);
+            this.Controls.SetChildIndex(this.button_YAML, 0);
             this.ResumeLayout(false);
 
         }
@@ -206,6 +229,7 @@ namespace TpsViewZhongXunNameSpace
                 // Do install
                 this.rwSystem = new RWSystem();
                 this.templateData = new TemplateData();
+                this.yamlFile = new YamlFile();
 
                 if (sender is ITpsViewLaunchServices)
                 {
@@ -263,6 +287,10 @@ namespace TpsViewZhongXunNameSpace
                 else if (_activeView == ActiveView.Weld)
                 {
                     this._viewWeld.Activate();
+                }
+                else if (_activeView == ActiveView.YAML)
+                {
+                    this._viewYAML.Activate();
                 }
                 _appInFocus = true;
             }
@@ -341,6 +369,37 @@ namespace TpsViewZhongXunNameSpace
 
                 // Ask Production view to set up its subscriptions to controller events
                 _viewWeld.Activate();
+            }
+            catch (System.Exception ex)
+            {
+                DisplayErrorMessage(ex.Message);
+            }
+            finally
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            }
+        }
+
+        private void button_YAML_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Wait cursor if it is performance demanding to open the view...
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+
+                // Set active view 
+                _activeView = ActiveView.YAML;
+
+                // Create view
+                _viewYAML = new TpsFormYAML(this._tpsRm, this.rwSystem, this.templateData,this.yamlFile);
+
+                // Set up subscription to Closing event of Production view
+                _viewYAML.Closing += new System.ComponentModel.CancelEventHandler(_onViewClosing);
+                _viewYAML.Closed += new EventHandler(_viewClosed);
+                _viewYAML.ShowMe(this);
+
+                // Ask Production view to set up its subscriptions to controller events
+                _viewYAML.Activate();
             }
             catch (System.Exception ex)
             {

@@ -26,7 +26,7 @@ namespace TpsViewZhongXunNameSpace.ZhongXun
         private const string strDataModuleName_ModelData = "SharedModule";
         private const string strDataTypeModuleName_ModelData = "GeneralModule";
         private const string strDataType_ModelData = "RECORDModelData";
-       private const string strDataName_ModelDataFirst = "rModelDataFirst";
+        private const string strDataName_ModelDataFirst = "rModelDataFirst";
         private const string strDataName_ModelOffset = "posModelOffset";
         private const string strDataName_ModelStart = "numModelOffsetStart";
         private const string strDataName_ModelQuantity = "numModelOffsetQuantity";
@@ -223,13 +223,14 @@ namespace TpsViewZhongXunNameSpace.ZhongXun
             rapidData.Value = new ABB.Robotics.Controllers.RapidDomain.Num(this.ModelOffsetQuantity);
             rapidData.Dispose();
 
-            rapidData = rwSystem.Controller.Rapid.GetRapidData(strTaskName, strDataModuleName_ModelData, strDataName_JobMode);
-            rapidData.Value = new ABB.Robotics.Controllers.RapidDomain.Num(1);
-            rapidData.Dispose();
         }
 
         public void StartToWeld(RWSystem rwSystem)
         {
+            ABB.Robotics.Controllers.RapidDomain.RapidData rapidData = rwSystem.Controller.Rapid.GetRapidData(strTaskName, strDataModuleName_ModelData, strDataName_JobMode);
+            rapidData.Value = new ABB.Robotics.Controllers.RapidDomain.Num(1);
+            rapidData.Dispose();
+
             ABB.Robotics.Controllers.IOSystemDomain.Signal signal = rwSystem.Controller.IOSystem.GetSignal("sgoPMPLC_1");
             ABB.Robotics.Controllers.IOSystemDomain.GroupSignal sgoPMPLC_1 = (ABB.Robotics.Controllers.IOSystemDomain.GroupSignal)signal;
             sgoPMPLC_1.GroupValue = 101;

@@ -19,6 +19,9 @@ namespace TpsViewZhongXunNameSpace
     {
         #region Fields
 
+        private const string CURRENT_MODULE_NAME = "TpsFormWeld";
+        private TpsResourceManager _tpsRm = null;
+        private RWSystem rwSystem = null;
         private TemplateData templateData;
 
         #endregion
@@ -26,9 +29,7 @@ namespace TpsViewZhongXunNameSpace
         private ABB.Robotics.Tps.Windows.Forms.MenuItem menuItem_Refresh;
         private ABB.Robotics.Tps.Windows.Forms.MenuItem menuItem_Apply;
         private ABB.Robotics.Tps.Windows.Forms.MenuItem menuItem_Close;
-
-        private TpsResourceManager _tpsRm = null;
-        private RWSystem rwSystem = null;
+        
         private GroupBox groupBox1;
         private ABB.Robotics.Tps.Windows.Forms.ListBox listBox_Template;
         private GroupBox groupBox2;
