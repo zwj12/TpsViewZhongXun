@@ -103,8 +103,8 @@ if exist strings.zh.resx (
                 al /t:lib /embed:TpsViewZhongXunNameSpace.strings.zh.resources /culture:en /out:TpsViewZhongXunTexts.resources.dll
                 copy TpsViewZhongXunTexts.resources.dll ..\language\zh\tps\TpsViewZhongXunTexts.resources.dll)
 
-mkdir "\\VBOXSVR\RobotStudio\Virtual Controllers\Controller_ZhongXun1\HOME\ProdScr\language"
-xcopy /e /y "$(ProjectDir)\language" "\\VBOXSVR\RobotStudio\Virtual Controllers\Controller_ZhongXun1\HOME\ProdScr\language"
-copy "$(TargetDir)$(TargetName).dll" "\\VBOXSVR\RobotStudio\Virtual Controllers\Controller_ZhongXun1\HOME\ProdScr\tps"</PostBuildEvent>
+mkdir "\\VBOXSVR\RobotStudio\Virtual Controllers\140-107895-20210809\HOME\ProdScr\language"
+xcopy /e /y "$(ProjectDir)\language" "\\VBOXSVR\RobotStudio\Virtual Controllers\140-107895-20210809\HOME\ProdScr\language"
+copy "$(TargetDir)$(TargetName).dll" "\\VBOXSVR\RobotStudio\Virtual Controllers\140-107895-20210809\HOME\ProdScr\tps"</PostBuildEvent>
   </PropertyGroup>
 </Project>
