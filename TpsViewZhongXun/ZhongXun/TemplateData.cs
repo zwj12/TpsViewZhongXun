@@ -176,7 +176,7 @@ namespace TpsViewZhongXunNameSpace.ZhongXun
             rapidData.Dispose();
 
             rapidData = rwSystem.Controller.Rapid.GetRapidData(strTaskName, strDataModuleName_ModelData, strDataName_ModelQuantity);
-             num = (ABB.Robotics.Controllers.RapidDomain.Num)rapidData.Value;
+            num = (ABB.Robotics.Controllers.RapidDomain.Num)rapidData.Value;
             this.ModelOffsetQuantity = (int)((double)num);
             rapidData.Dispose();
                     

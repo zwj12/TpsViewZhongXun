@@ -16,6 +16,7 @@ using ABB.Robotics.Controllers.RapidDomain;
 
 using TpsViewZhongXunNameSpace.Robot;
 using TpsViewZhongXunNameSpace.ZhongXun;
+using TpsViewZhongXunNameSpace.Utility;
 
 //
 // The ProductionScreenApp attribute is used by the SetupEditor to help the user to 
@@ -62,12 +63,14 @@ namespace TpsViewZhongXunNameSpace
             Weld = 1,
             YAML=2,
             Setting=3,
+            Register=4,
         }
 
         private ActiveView _activeView = ActiveView.Desktop;
         private TpsFormWeld _viewWeld = null;
         private TpsFormYAML _viewYAML = null;
         private TpsFormSetting _viewSetting = null;
+        private TpsFormRegister _viewRegister = null;
 
         private ITpsViewLaunchServices _iTpsSite;
         private TpsResourceManager _tpsRm = null;
@@ -78,6 +81,7 @@ namespace TpsViewZhongXunNameSpace
         private TpsLabel tpsLabel_Title;
         private Button button_YAML;
         private Button button_Setting;
+        private Button button_Register;
         private Button button_Weld;
  
 
@@ -139,6 +143,7 @@ namespace TpsViewZhongXunNameSpace
             this.button_Weld = new ABB.Robotics.Tps.Windows.Forms.Button();
             this.button_YAML = new ABB.Robotics.Tps.Windows.Forms.Button();
             this.button_Setting = new ABB.Robotics.Tps.Windows.Forms.Button();
+            this.button_Register = new ABB.Robotics.Tps.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tpsLabel_Title
@@ -204,10 +209,27 @@ namespace TpsViewZhongXunNameSpace
             this.button_Setting.TextAlign = ABB.Robotics.Tps.Windows.Forms.ContentAlignmentABB.MiddleCenter;
             this.button_Setting.Click += new System.EventHandler(this.button_Setting_Click);
             // 
+            // button_Register
+            // 
+            this.button_Register.BackColor = System.Drawing.Color.White;
+            this.button_Register.BackgroundImage = null;
+            this.button_Register.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.button_Register.Font = ABB.Robotics.Tps.Windows.Forms.TpsFont.Font12b;
+            this.button_Register.Image = null;
+            this.button_Register.Location = new System.Drawing.Point(519, 335);
+            this.button_Register.Name = "button_Register";
+            this.button_Register.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(172)))), ((int)(((byte)(182)))));
+            this.button_Register.Size = new System.Drawing.Size(120, 41);
+            this.button_Register.TabIndex = 10;
+            this.button_Register.Text = "Register";
+            this.button_Register.TextAlign = ABB.Robotics.Tps.Windows.Forms.ContentAlignmentABB.MiddleCenter;
+            this.button_Register.Click += new System.EventHandler(this.button_Register_Click);
+            // 
             // TpsViewZhongXun
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.LightGray;
+            this.Controls.Add(this.button_Register);
             this.Controls.Add(this.button_Setting);
             this.Controls.Add(this.button_YAML);
             this.Controls.Add(this.button_Weld);
@@ -218,6 +240,7 @@ namespace TpsViewZhongXunNameSpace
             this.Controls.SetChildIndex(this.button_Weld, 0);
             this.Controls.SetChildIndex(this.button_YAML, 0);
             this.Controls.SetChildIndex(this.button_Setting, 0);
+            this.Controls.SetChildIndex(this.button_Register, 0);
             this.ResumeLayout(false);
 
         }
@@ -250,16 +273,20 @@ namespace TpsViewZhongXunNameSpace
             try
             {
                 // Do install
+
+
                 this.rwSystem = new RWSystem();
                 this.templateData = new TemplateData();
                 this.yamlFile = new YamlFile();
                 this.setting = new Setting();
 
+
                 if (sender is ITpsViewLaunchServices)
                 {
                     this._iTpsSite = sender as ITpsViewLaunchServices;
-                    return true;
                 }
+
+                this.CheckLicense();
 
                 return true;
             }
@@ -460,6 +487,68 @@ namespace TpsViewZhongXunNameSpace
 
                 // Ask Production view to set up its subscriptions to controller events
                 _viewSetting.Activate();
+            }
+            catch (System.Exception ex)
+            {
+                DisplayErrorMessage(ex.Message);
+            }
+            finally
+            {
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+            }
+        }
+
+        void CheckLicense()
+        {
+            string robot_serial_number_high_part = this.rwSystem.Controller.Configuration.Read("MOC", "ROBOT_SERIAL_NUMBER", "rob_1", "robot_serial_number_high_part");
+            string robot_serial_number_low_part = this.rwSystem.Controller.Configuration.Read("MOC", "ROBOT_SERIAL_NUMBER", "rob_1", "robot_serial_number_low_part");
+            string strSerialNumber = robot_serial_number_high_part + "-" + robot_serial_number_low_part;
+             EncryptionHelper encryptionHelper = new EncryptionHelper();
+            string strKey = encryptionHelper.EncryptString(strSerialNumber);
+            
+            RapidData rapidData = rwSystem.Controller.Rapid.GetRapidData("T_ROB1", "SharedModule", "strUtilityKey");
+            string strUtilityKey = rapidData.Value.ToString().Trim("\"".ToCharArray());
+            rapidData.Dispose();
+
+            DateTime now = this.rwSystem.Controller.DateTime;
+
+            if (this.rwSystem.Controller.IsVirtual || strUtilityKey == strKey || now.Year <= 2022)
+            //if (strUtilityKey == strKey)
+            {
+                this.button_Weld.Enabled = true;
+                this.button_YAML.Enabled = true;
+                this.button_Setting.Enabled = true;
+                this.button_Register.Visible = false;
+            }
+            else
+            {
+                this.button_Weld.Enabled = false;
+                this.button_YAML.Enabled = false;
+                this.button_Setting.Enabled = false;
+                this.button_Register.Visible = true;
+            }
+        }
+            
+        private void button_Register_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Wait cursor if it is performance demanding to open the view...
+                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+
+                // Set active view 
+                _activeView = ActiveView.Register;
+
+                // Create view
+                _viewRegister = new TpsFormRegister(this._tpsRm, this.rwSystem);
+
+                // Set up subscription to Closing event of Production view
+                _viewRegister.Closing += new System.ComponentModel.CancelEventHandler(_onViewClosing);
+                _viewRegister.Closed += new EventHandler(_viewClosed);
+                _viewRegister.ShowMe(this);
+
+                // Ask Production view to set up its subscriptions to controller events
+                _viewRegister.Activate();
             }
             catch (System.Exception ex)
             {
