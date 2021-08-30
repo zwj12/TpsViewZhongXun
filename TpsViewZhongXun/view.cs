@@ -512,8 +512,25 @@ namespace TpsViewZhongXunNameSpace
 
             DateTime now = this.rwSystem.Controller.DateTime;
 
-            if (this.rwSystem.Controller.IsVirtual || strUtilityKey == strKey || now.Year <= 2022)
-            //if (strUtilityKey == strKey)
+            bool boolHasLicense = false;
+            if (this.rwSystem.Controller.IsVirtual || strUtilityKey == strKey)
+            {
+                boolHasLicense = true;
+            }
+            else if (now.Year == 2020 && strUtilityKey == "ZhongXun2020")
+            {
+                boolHasLicense = true;
+            }
+            else if (now.Year == 2021 && strUtilityKey == "ZhongXun2021")
+            {
+                boolHasLicense = true;
+            }
+            else if (now.Year == 2022 && strUtilityKey == "ZhongXun2022")
+            {
+                boolHasLicense = true;
+            }
+
+            if (boolHasLicense)
             {
                 this.button_Weld.Enabled = true;
                 this.button_YAML.Enabled = true;

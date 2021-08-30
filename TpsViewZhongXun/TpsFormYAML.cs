@@ -295,6 +295,7 @@ namespace TpsViewZhongXunNameSpace
                     ABB.Robotics.Tps.Windows.Forms.ListViewItem listViewItem = new ABB.Robotics.Tps.Windows.Forms.ListViewItem(this.yamlFile.YamlFileList[i]);
                     this.listView_YamlFile.Items.Add(listViewItem);
                 }
+                this.listView_YamlFile.Sort();
                 this.menuItem_Apply.Enabled = false;
             }
             catch (Exception ex)
@@ -352,7 +353,7 @@ namespace TpsViewZhongXunNameSpace
         }
 
         private void button_StartToWeld_Click(object sender, EventArgs e)
-        {
+        {            
             if (!string.IsNullOrEmpty( this.textBox_YAML.Text))
             {
                 this.yamlFile.YamlFileName = this.textBox_YAML.Text;
