@@ -503,7 +503,7 @@ namespace TpsViewZhongXunNameSpace
             string robot_serial_number_high_part = this.rwSystem.Controller.Configuration.Read("MOC", "ROBOT_SERIAL_NUMBER", "rob_1", "robot_serial_number_high_part");
             string robot_serial_number_low_part = this.rwSystem.Controller.Configuration.Read("MOC", "ROBOT_SERIAL_NUMBER", "rob_1", "robot_serial_number_low_part");
             string strSerialNumber = robot_serial_number_high_part + "-" + robot_serial_number_low_part;
-             EncryptionHelper encryptionHelper = new EncryptionHelper();
+            EncryptionHelper encryptionHelper = new EncryptionHelper();
             string strKey = encryptionHelper.EncryptString(strSerialNumber);
             
             RapidData rapidData = rwSystem.Controller.Rapid.GetRapidData("T_ROB1", "SharedModule", "strUtilityKey");
@@ -513,7 +513,11 @@ namespace TpsViewZhongXunNameSpace
             DateTime now = this.rwSystem.Controller.DateTime;
 
             bool boolHasLicense = false;
-            if (this.rwSystem.Controller.IsVirtual || strUtilityKey == strKey)
+            if (strUtilityKey == strKey)
+            {
+                boolHasLicense = true;
+            }
+            else if (this.rwSystem.Controller.IsVirtual && strUtilityKey != "michael")
             {
                 boolHasLicense = true;
             }
