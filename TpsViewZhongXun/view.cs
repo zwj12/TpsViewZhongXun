@@ -521,15 +521,15 @@ namespace TpsViewZhongXunNameSpace
             {
                 boolHasLicense = true;
             }
-            else if (now.Year == 2020 && strUtilityKey == "ZhongXun2020")
+            else if (now.Year <= 2020 && strUtilityKey == "ZhongXun2020")
             {
                 boolHasLicense = true;
             }
-            else if (now.Year == 2021 && strUtilityKey == "ZhongXun2021")
+            else if (now.Year <= 2021 && strUtilityKey == "ZhongXun2021")
             {
                 boolHasLicense = true;
             }
-            else if (now.Year == 2022 && strUtilityKey == "ZhongXun2022")
+            else if (now.Year <= 2022 && strUtilityKey == "ZhongXun2022")
             {
                 boolHasLicense = true;
             }
